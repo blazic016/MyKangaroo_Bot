@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "MyKangaroo_Bot",
+  "description": "Opis skriptne nije popunjen mozda nekad bude....",
+  "version": "1.0",
+
+
+  
+  "background":  {
+    "scripts": ["js/background.js"]
+  },
+  
+  
+  
+  
+  "content_scripts": [ {
+			"matches": ["*://*.instagram.com/*", "*://*.facebook.com/*"],
+			"css": [ "css/kure_css.css"],           
+			"js": ["js/jquery.js", "js/share.js"]
+		}
+	] }
+

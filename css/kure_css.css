@@ -1,0 +1,77 @@
+
+.kure_menu{
+    
+    position: fixed;
+    bottom: 44px;
+    width: 100%;
+    height: 44px;
+    background: #4ADB2C;
+    z-index: 501;
+    
+}
+
+
+.kure_btn {
+
+    background-color: #541e42;
+    box-shadow: 0 0 6px #404040;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 12px;
+    display: inline-block !important;
+    padding: 10px;
+    text-align: center;
+    width: 18%;
+    height: 36px;
+    margin: 4px;
+    z-index: 502;
+    position: fixed;
+    bottom: 44px;
+    
+
+}
+
+#kure_btn_1{
+    left: 2%;
+}
+#kure_btn_2{
+    left: 27%;
+}
+#kure_btn_3{
+    left: 52%;
+}
+#kure_btn_4{
+    left: 77%;
+}
+
+
+
+
+
+.button_delete_profilne {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	
+	top: 44px;
+	position: fixed;
+	z-index: 501;
+	display: inline-block !important;
+	right: 50%;
+	cursor:pointer;
+}
+
+.button_delete_profilne:hover {
+	background-color: #9EBB51;
+}
+
+
+
+
+
+
