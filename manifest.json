@@ -13,11 +13,10 @@
   
   
   
-  
   "content_scripts": [ {
-			"matches": ["*://*.instagram.com/*", "*://*.facebook.com/*"],
+			"matches": ["*://www.kangarootreasure.com/*"],
 			"css": [ "css/kure_css.css"],           
-			"js": ["js/jquery.js", "js/share.js"]
+			"js": ["js/jquery.js", "js/Content.js"]
 		}
 	] }
 
