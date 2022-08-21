@@ -12,9 +12,9 @@
   },
   
   
-  
+  // "matches": ["*://*.kangarootreasure.com/*"],
   "content_scripts": [ {
-			"matches": ["*://www.kangarootreasure.com/*"],
+      "matches": ["*://*.kangarootreasure.com/*"],
 			"css": [ "css/kure_css.css"],           
 			"js": ["js/jquery.js", "js/Content.js"]
 		}
