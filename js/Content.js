@@ -80,10 +80,10 @@ function f_work_task()
     var class_prihvati = $('.btn.queding')[0];
     if (class_prihvati)
     {
-      console.log(" >>> IMA  PRIHVATI")
+      // console.log(" >>> IMA  PRIHVATI")
       is_exist_prihvati = 1;
     } else {
-      console.log(">>> NEMA - PRIHVATI")
+      // console.log(">>> NEMA - PRIHVATI")
       is_exist_prihvati = 0;
     }
   }, 1000);
@@ -114,50 +114,55 @@ function f_work_task()
       is_exist_loadingword = 0;
       // console.log("NEMA - loadingword")
     }
-    console.log("----------------")
+  
 
   }, 1000);
 
-  // 0 - hmm?
-  // 1 - treba da klikne buy new
-  // 2 - treba da klikne na prihvati
-  // 3 - treba da klikne na odrediti
+
   var flag_state = 0;
+  var flag_is_changed = 0;
   var interval_clicking = setInterval(function () 
   {
 
     var class_buy_new = $('.buynow')[0];
-    var class_prihvati = $('.btn.queding');
-    var class_odrediti = $('.overbtn');
+    var class_prihvati = $('.btn.queding')[0];
+    var class_odrediti = $('.overbtn')[0];
     var class_loadingword = $('.loadingword')[0];
 
     // TOOD: flag_state == 1,2,3 get stuck :(
 
-    if (flag_state == 0 && is_exist_buy_new == 1 && is_exist_prihvati == 0 && is_exist_odrediti == 0 && is_exist_loadingword == 0)
+    flag_is_changed = 0;
+
+    if (flag_state == 0 || flag_state == 3 && is_exist_buy_new == 1 && is_exist_prihvati == 0 && is_exist_odrediti == 0 && is_exist_loadingword == 0)
     {
-      flag_state = 0;
+      flag_state = 1;
       class_buy_new.click();
+      flag_is_changed = 1;
     }
 
     if (flag_state == 1 && is_exist_buy_new == 1 && is_exist_prihvati == 1 && is_exist_odrediti == 0 && is_exist_loadingword == 0)
     {
-      flag_state = 0;
-      class_buy_new.click();
+      flag_state = 2;
+      class_prihvati.click();
+      flag_is_changed = 1;
     }
 
     if (flag_state == 2 && is_exist_buy_new == 1 && is_exist_prihvati == 0 && is_exist_odrediti == 1 && is_exist_loadingword == 0)
     {
       flag_state = 3;
       class_odrediti.click();
+      flag_is_changed = 1;
     }
 
-    console.log("flag_state="+flag_state);
-    is_exist_buy_new==1?console.log("IMA BUY NEW"):console.log("NEMA - BUY NEW");
-    is_exist_prihvati==1?console.log("IMA PRIHATI"):console.log("NEMA - PRIHVATI");
-
-    is_exist_odrediti==1?console.log("IMA ODREDI"):console.log("NEMA - ODREDI");
-    is_exist_loadingword==1?console.log("IMA LOADINGWORD"):console.log("NEMA - LOADINGWORD");
-
+    if (flag_is_changed == 1)
+    {
+      console.log("flag_state="+flag_state);
+      is_exist_buy_new==1?console.log("IMA BUY NEW"):console.log("NEMA - BUY NEW");
+      is_exist_prihvati==1?console.log("IMA PRIHATI"):console.log("NEMA - PRIHVATI");
+      is_exist_odrediti==1?console.log("IMA ODREDI"):console.log("NEMA - ODREDI");
+      is_exist_loadingword==1?console.log("IMA LOADINGWORD"):console.log("NEMA - LOADINGWORD");
+      console.log("----------------");
+    }
   }, 1000);
 
 
@@ -188,26 +193,31 @@ triggerThis = function()
 }
 
 
-function convertMsToTime_pomoc(milliseconds) {
-  let seconds = Math.floor(milliseconds / 1000);
-  let minutes = Math.floor(seconds / 60);
-  let hours = Math.floor(minutes / 60);
+function kure_append_menu() {
+    
+  if ($('#kure_menu').length == 1) {
+      return;
+  }
+  
+  var kure_menu =`<div class="kure_menu" id="kure_menu">
+    <div class="button" id="button1">Start Now</div>
+    <div class="label" id="label1">Text for any information</div>
 
-  seconds = seconds % 60;
-  minutes = minutes % 60;
-  hours = hours % 24;
+  </div>`;
+  $('body').append(kure_menu);
 
-  return `${padTo2Digits(hours+2)}:${padTo2Digits(minutes)}`;
-}
+  $("#button1").click(function () {
+    f_work_task();
+  });
+
+};
+
+
+
 
 /* main */
-// const trenutno =  new Date();
-// console.log("trenutno " + trenutno)
-// console.log("aa " + convertMsToTime_pomoc(trenutno.getTime()))
-
-// const time = convertMsToTime_pomoc(trenutno.getTime());
 const time = '10:33'; // Actually: 00:45
-// console.log("time "+time)
 runEveryDay(time, triggerThis);
+setTimeout(kure_append_menu, 2000);
 
 

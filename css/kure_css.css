@@ -4,12 +4,43 @@
     position: fixed;
     bottom: 44px;
     width: 100%;
-    height: 44px;
-    background: #4ADB2C;
+    height: 55px;
+    background: #4c4c4b;
     z-index: 501;
+    /* opacity: 0.5; */
     
 }
 
+
+.button{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2px 2px;
+    cursor: pointer;
+}
+
+.button:hover {
+	background-color: #6fd173;
+}
+
+.label{
+    color: white;
+    background-color: #9daf4c;
+    width:33%;
+    padding: 15px 32px;
+    text-align: right;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2px 2px;
+    position:relative;
+}
 
 .kure_btn {
 
@@ -26,8 +57,7 @@
     margin: 4px;
     z-index: 502;
     position: fixed;
-    bottom: 44px;
-    
+    top: 5px;
 
 }
 
@@ -58,7 +88,7 @@
     display: inline-block;
     font-size: 16px;
 	
-	top: 44px;
+	top: 0px;
 	position: fixed;
 	z-index: 501;
 	display: inline-block !important;
@@ -66,9 +96,7 @@
 	cursor:pointer;
 }
 
-.button_delete_profilne:hover {
-	background-color: #9EBB51;
-}
+
 
 
 
