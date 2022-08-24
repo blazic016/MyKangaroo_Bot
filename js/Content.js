@@ -10,7 +10,7 @@ function convertMsToTime(milliseconds) {
 
   seconds = seconds % 60;
   minutes = minutes % 60;
-  hours = hours % 24;
+  hours = hours % 24 +2; // Because of diferent timezone (2h diference). Use only for optimal print
 
   return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(
     seconds,
@@ -18,6 +18,27 @@ function convertMsToTime(milliseconds) {
 }
 
 
+function getTodayDate()
+{
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
+  return today;
+}
+
+function getTomorrowDate()
+{
+  var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+  var day = currentDate.getDate()
+  var month = currentDate.getMonth() + 1
+  var year = currentDate.getFullYear()
+  var tomorrow = day + "/" + month + "/" + year
+  return tomorrow;
+}
+
+var day_of_execute = 0;
 function runEveryDay(time, triggerThis_p)
 {
   const hour = Number(time.split(':')[0]);
@@ -28,14 +49,19 @@ function runEveryDay(time, triggerThis_p)
   startTime.setHours(hour, minute);
   const now = new Date();
 
+  var day_of_execute = getTodayDate();
+
   // increase timepoint by 24 hours if in the past
   if (startTime.getTime() < now.getTime()) {
     startTime.setHours(startTime.getHours() + 24);
+    day_of_execute = getTomorrowDate();
   }
 
   // get the interval in ms from now to the timepoint when to trigger the alarm
   const firstTriggerAfterMs = startTime.getTime() - now.getTime();
-  console.log("First time to launch: " + convertMsToTime(firstTriggerAfterMs + now.getTime()));
+  console.log("First time to launch: " + convertMsToTime(firstTriggerAfterMs + now.getTime()) + " " + day_of_execute );
+  $('#label1').text("First time to launch: " + convertMsToTime(firstTriggerAfterMs + now.getTime()) + " " + day_of_execute );
+
 
   // trigger the function triggerThis() at the timepoint
   // create setInterval when the timepoint is reached to trigger it every day at this timepoint
@@ -44,11 +70,12 @@ function runEveryDay(time, triggerThis_p)
     const nowTimeout = new Date();
     triggerThis_p();
     console.log("Next time to launch: " + convertMsToTime(day_in_ms + nowTimeout.getTime()));
-
+    $('#label1').text("Next time to launch: " + convertMsToTime(day_in_ms + nowTimeout.getTime()) + " " + getTomorrowDate() );
     setInterval(function() { 
       const nowInterval = new Date();
       triggerThis_p();
       console.log("Next time to launch: " + convertMsToTime(day_in_ms + nowInterval.getTime()));
+      $('#label1').text("Next time to launch: " + convertMsToTime(day_in_ms + nowTimeout.getTime()) + " " + getTomorrowDate() );
     }
     , day_in_ms);
   }, firstTriggerAfterMs);
@@ -57,6 +84,19 @@ function runEveryDay(time, triggerThis_p)
 
 function f_work_task()
 {
+
+  // Must be removed
+  $(".buynow.add").remove();
+  // $(".blackwra").remove();
+  // $(".card1").remove();
+  // $(".card2").remove();
+  // $(".datas").remove();
+  // $(".shouru").remove();
+  // $(".srhead").remove();
+
+
+  // $(".uni-scroll-view").remove();
+
   var is_exist_buy_new = 0;
   var is_exist_prihvati = 0;
   var is_exist_odrediti = 0;
@@ -64,7 +104,7 @@ function f_work_task()
 
   var interval_buy_now = setInterval(function () 
   {
-    var class_buy_new = $('.buynow')[0];
+    var class_buy_new = $('.buynow');
     if (class_buy_new)
     {
       // console.log("IMA BUY NOW")
@@ -77,27 +117,33 @@ function f_work_task()
 
   var interval_prihvati = setInterval(function () 
   {
-    var class_prihvati = $('.btn.queding')[0];
+    var class_prihvati = $('.btn.queding');
     if (class_prihvati)
     {
-      // console.log(" >>> IMA  PRIHVATI")
-      is_exist_prihvati = 1;
-    } else {
+      if (class_prihvati.is(":visible") == true)
+      {
+        // console.log(" >>> IMA  PRIHVATI")
+        is_exist_prihvati = 1;
+      } else {
       // console.log(">>> NEMA - PRIHVATI")
       is_exist_prihvati = 0;
-    }
+      }
+    } 
   }, 1000);
 
   var interval_odrediti = setInterval(function () 
   {
-    var class_odrediti = $('.overbtn')[0];
+    var class_odrediti = $('.overbtn');
     if (class_odrediti)
     {
-      // console.log("IMA ODREDITI")
-      is_exist_odrediti = 1;
-    } else {
-      is_exist_odrediti = 0;
-      // console.log("NEMA - ODREDITI")
+      if (class_odrediti.is(":visible") == true)
+      {
+        // console.log(" >>> IMA ODREDI")
+        is_exist_odrediti = 1;
+      } else {
+        // console.log(">>> NEMA - ODREDI")
+        is_exist_odrediti = 0;
+      }
     }
   }, 1000);
 
@@ -105,22 +151,24 @@ function f_work_task()
   // klasa koja se pojavljuje izmedju klikova
   var interval_loadingword = setInterval(function () 
   {
-    var class_loadingword = $('.loadingword')[0];
+    var class_loadingword = $('.loadingword');
     if (class_loadingword)
     {
-      is_exist_loadingword = 1;
-      // console.log("IMA loadingword")
-    } else {
-      is_exist_loadingword = 0;
-      // console.log("NEMA - loadingword")
+      if (class_loadingword.is(":visible") == true)
+      {
+        // console.log(" >>> IMA loadingword")
+        is_exist_loadingword = 1;
+      } else {
+        // console.log(">>> NEMA - loadingword")
+        is_exist_loadingword = 0;
+      }
     }
-  
-
   }, 1000);
 
 
   var flag_state = 0;
   var flag_is_changed = 0;
+  var num_task_finished = 0;
   var interval_clicking = setInterval(function () 
   {
 
@@ -152,6 +200,8 @@ function f_work_task()
       flag_state = 3;
       class_odrediti.click();
       flag_is_changed = 1;
+      num_task_finished = num_task_finished + 1;
+      $('#label2').text("Task finished: " + num_task_finished);
     }
 
     if (flag_is_changed == 1)
@@ -171,7 +221,8 @@ function f_work_task()
     var class_finish = $('.uni-fade-leave-active.uni-fade-leave-to')[0];
     if (class_finish)
     {
-      console.log("IMA FINISH")
+      console.log("ALL TASKS FINISHED FOR TODAY!")
+      $('#label2').text("All tasks finished for today.");
       clearInterval(interval_buy_now);
       clearInterval(interval_prihvati);
       clearInterval(interval_odrediti);
@@ -202,7 +253,7 @@ function kure_append_menu() {
   var kure_menu =`<div class="kure_menu" id="kure_menu">
     <div class="button" id="button1">Start Now</div>
     <div class="label" id="label1">Text for any information</div>
-
+    <div class="label" id="label2">Task finished: 0</div>
   </div>`;
   $('body').append(kure_menu);
 
@@ -212,12 +263,16 @@ function kure_append_menu() {
 
 };
 
-
-
+function test()
+{
+  console.log("LOG FROM TEST FUNCTION")
+}
 
 /* main */
-const time = '10:33'; // Actually: 00:45
+const time = '02:15'; 
+kure_append_menu();
 runEveryDay(time, triggerThis);
-setTimeout(kure_append_menu, 2000);
+// runEveryDay(time, test);
+
 
 
